@@ -17,7 +17,7 @@ namespace DataAccess.Repository
             _ctx = ctx;
         }
 
-        public bool ExchangeAuth(string token)
+        public bool ExchangeAuth(int userId, string token)
         {
             return false;
         }

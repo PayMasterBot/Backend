@@ -10,6 +10,6 @@ namespace DataAccess.Interface
     public interface IExchangeRepository
     {
         public JsonObject? GetBalance(int userId);
-        public bool ExchangeAuth(string token);
+        public bool ExchangeAuth(int userId, string token);
     }
 }
