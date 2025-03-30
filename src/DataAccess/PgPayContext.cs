@@ -10,10 +10,10 @@ namespace DataAccess
 {
     public class PgPayContext : DbContext
     {
-        public DbSet<ExhangeRateSubscription> ExchangeSubs { get; set; }
+        public DbSet<ExchangeRateSubscription> ExchangeSubs { get; set; }
         public DbSet<Expence> Expences { get; set; }
         public DbSet<ExpenceCategory> ExpenceCategories { get; set; }
-        public DbSet<Subscribe> Subscriptions { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<User> Users { get; set; }
 
         public PgPayContext(DbContextOptions<PgPayContext> opt) : base(opt)
