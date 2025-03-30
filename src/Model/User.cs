@@ -16,6 +16,6 @@ namespace Model
         [AllowNull]
         public string? Token { get; set; }
         [JsonIgnore]
-        public virtual ICollection<ExpenceCategory> ExpenceCategories { get; set; }
+        public virtual ICollection<ExpenceCategory> ExpenceCategories { get; set; } = new List<ExpenceCategory>();
     }
 }

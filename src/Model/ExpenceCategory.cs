@@ -15,6 +15,6 @@ namespace Model
         [Required]
         public string Title { get; set; }
         [JsonIgnore]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<User> Users { get; set; } = new List<User>();
     }
 }
