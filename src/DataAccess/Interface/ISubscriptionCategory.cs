@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
-namespace DataAccess.Repository
+namespace DataAccess.Interface
 {
     public interface ISubscriptionCategory
     {
