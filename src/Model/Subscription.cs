@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Subscribe
+    public class Subscription
     {
         [Key]
         public int Id { get; set; }

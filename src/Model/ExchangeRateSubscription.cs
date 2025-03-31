@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class ExhangeRateSubscription
+    public class ExchangeRateSubscription
     {
         [Key]
         public int UserId { get; set; }

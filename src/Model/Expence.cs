@@ -26,5 +26,7 @@ namespace Model
         public string Title { get; set; }
         [Required]
         public int Price { get; set; }
+        [Required]
+        public DateTime Date { get; set; }
     }
 }
