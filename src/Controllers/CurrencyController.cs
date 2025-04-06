@@ -20,6 +20,7 @@ namespace src.Controllers
         }
 
         [Route("/api/currency-pair/rate")]
+        [HttpGet]
         public ActionResult<double> GetRate([FromQuery] string Cur1, [FromQuery] string Cur2)
         {
             try
@@ -33,12 +34,14 @@ namespace src.Controllers
         }
 
         [Route("/api/currency-pair")]
+        [HttpGet]
         public ActionResult<ICollection<ExchangeRateSubscription>> AllCurrencyPairs([FromQuery] int userId)
         {
             return Ok(_rep.GetCurrencyPairs(userId));
         }
 
         [Route("/api/currency-pair")]
+        [HttpDelete]
         public ActionResult DeleteCurrencyPair([FromQuery] int userId, [FromBody] CurrencyPairDto pair)
         {
             ExchangeRateSubscription sub = pair;
@@ -47,6 +50,7 @@ namespace src.Controllers
         }
 
         [Route("/api/currency-pair")]
+        [HttpPost]
         public ActionResult<ExchangeRateSubscription> AddCurrencyPair([FromQuery] int userId, [FromBody] CurrencyPairDto pair)
         {
             ExchangeRateSubscription sub = pair;
@@ -56,6 +60,7 @@ namespace src.Controllers
         }
 
         [Route("/api/currency-pair/report")]
+        [HttpGet]
         public ActionResult<ExchangeRateSubscription> GetReport([FromBody] CurrencyPairDto pair)
         {
             var res = _rep.GetReport(pair);

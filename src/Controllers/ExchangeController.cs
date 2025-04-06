@@ -20,6 +20,7 @@ namespace src.Controllers
         }
 
         [Route("/api/exchange/balance")]
+        [HttpGet]
         public ActionResult<JsonObject> GetBalance([FromQuery] int userId)
         {
             var res = _rep.GetBalance(userId);
@@ -27,6 +28,7 @@ namespace src.Controllers
         }
 
         [Route("/api/exchange/auth")]
+        [HttpPost]
         public ActionResult MakeAuth([FromQuery] int userId, [FromBody] string token)
         {
             return _rep.ExchangeAuth(userId, token) ? Ok() : BadRequest();

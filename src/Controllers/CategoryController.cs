@@ -20,6 +20,7 @@ namespace src.Controllers
         }
 
         [Route("/api/category")]
+        [HttpPost]
         public ActionResult<ExpenceCategory> AddCategory([FromQuery] int userId, [FromBody] ExpenceCategory cat)
         {
             var res = _rep.AddCategory(cat, new User { Id = userId });
@@ -27,12 +28,14 @@ namespace src.Controllers
         }
 
         [Route("/api/category")]
+        [HttpGet]
         public ActionResult<ICollection<ExpenceCategory>> AllCategories([FromQuery] int userId)
         {
             return Ok(_rep.GetCategories(userId));
         }
 
         [Route("/api/category/{id}")]
+        [HttpDelete]
         public ActionResult DeleteCategory([FromQuery] int userId, [FromRoute] int id)
         {
             if (_rep.DeleteCategory(id, userId))
@@ -43,6 +46,7 @@ namespace src.Controllers
         }
 
         [Route("/api/category/{id}")]
+        [HttpGet]
         public ActionResult<ExpenceCategory> GetCategory([FromQuery] int userId, [FromRoute] int id)
         {
             var res = _rep.GetCategory(id, userId);
@@ -50,6 +54,7 @@ namespace src.Controllers
         }
 
         [Route("/api/category/{id}/spending")]
+        [HttpPost]
         public ActionResult<Expence> AddSpending([FromQuery] int userId, [FromRoute] int id, [FromBody] ExpenceDto dto)
         {
             dto.CatId = id;
@@ -59,6 +64,7 @@ namespace src.Controllers
         }
 
         [Route("/api/category/report")]
+        [HttpGet]
         public ActionResult<JsonObject> GetReport([FromQuery] int userId)
         {
             var res = _rep.GetReport(userId);

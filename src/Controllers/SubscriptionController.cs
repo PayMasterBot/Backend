@@ -20,6 +20,7 @@ namespace src.Controllers
         }
 
         [Route("/api/subscription")]
+        [HttpPost]
         public ActionResult<Subscription> AddSubscription([FromQuery] int userId, [FromBody] Subscription sub)
         {
             sub.UserId = userId;
@@ -28,12 +29,14 @@ namespace src.Controllers
         }
 
         [Route("/api/subscription")]
+        [HttpGet]
         public ActionResult<ICollection<Subscription>> AllSubscriptions([FromQuery] int userId)
         {
             return Ok(_rep.GetSubscriptions(userId));
         }
 
         [Route("/api/subscription/{id}")]
+        [HttpDelete]
         public ActionResult DeleteSubscription([FromRoute] int id)
         {
             if (_rep.DeleteSubscription(id))
@@ -44,6 +47,7 @@ namespace src.Controllers
         }
 
         [Route("/api/subscription/{id}")]
+        [HttpGet]
         public ActionResult<Subscription> GetSubscription([FromRoute] int id)
         {
             var res = _rep.GetSubscription(id);
