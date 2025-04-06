@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repository
 {
-    public class PgSubscriptionRepository : ISubscriptionCategory
+    public class PgSubscriptionRepository : ISubscriptionRepository
     {
         private PgPayContext _ctx;
 
