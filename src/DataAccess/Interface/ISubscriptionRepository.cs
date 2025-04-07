@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Interface
 {
-    public interface ISubscriptionCategory
+    public interface ISubscriptionRepository
     {
         public Subscription? AddSubscription(Subscription sub);
         public Subscription? GetSubscription(int id);

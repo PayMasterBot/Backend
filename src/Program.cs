@@ -1,3 +1,6 @@
+using DataAccess;
+using Microsoft.EntityFrameworkCore;
+
 namespace src
 {
     public class Program
@@ -6,6 +9,12 @@ namespace src
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddDbContext<PgPayContext>(opt =>
+            {
+                string connect = System.Environment.GetEnvironmentVariable("PMB_BACKEND_CONNECT");
+                opt.UseNpgsql(connect);
+                opt.UseLazyLoadingProxies();
+            });
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
