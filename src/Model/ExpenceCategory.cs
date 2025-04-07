@@ -16,5 +16,7 @@ namespace Model
         public string Title { get; set; }
         [JsonIgnore]
         public virtual ICollection<User> Users { get; set; } = new List<User>();
+        [JsonIgnore]
+        public virtual ICollection<Expence> Expences { get; set; } = new List<Expence>();
     }
 }

@@ -25,6 +25,29 @@ namespace DataAccess
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<ExchangeRateSubscription>()
+                .HasKey(s => new { s.UserId, s.Currency1, s.Currency2 });
+
+            modelBuilder.Entity<Subscription>()
+                .HasOne(s => s.User)
+                .WithMany(u => u.Subscriptions)
+                .HasForeignKey(s => s.UserId)
+                .HasPrincipalKey(u => u.Id);
+            modelBuilder.Entity<Expence>()
+                .HasOne(e => e.User)
+                .WithMany(u => u.Expences)
+                .HasForeignKey(e => e.UserId)
+                .HasPrincipalKey(u => u.Id);
+            modelBuilder.Entity<Expence>()
+                .HasOne(e => e.Category)
+                .WithMany(c => c.Expences)
+                .HasForeignKey(e => e.CategoryId)
+                .HasPrincipalKey(c => c.Id);
+            modelBuilder.Entity<ExchangeRateSubscription>()
+                .HasOne(e => e.User)
+                .WithMany(u => u.ExchangeRates)
+                .HasForeignKey(e => e.UserId)
+                .HasPrincipalKey(u => u.Id);
             modelBuilder.Entity<ExpenceCategory>()
                 .HasMany(c => c.Users)
                 .WithMany(u => u.ExpenceCategories);

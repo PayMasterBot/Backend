@@ -15,7 +15,7 @@ namespace Model
         public int Id { get; set; }
         [Required]
         public int UserId { get; set; }
-        [ForeignKey("Id"), JsonIgnore]
+        [JsonIgnore]
         public virtual User User { get; set; }
         [Required]
         public string Title { get; set; }

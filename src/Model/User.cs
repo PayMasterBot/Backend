@@ -17,5 +17,11 @@ namespace Model
         public string? Token { get; set; }
         [JsonIgnore]
         public virtual ICollection<ExpenceCategory> ExpenceCategories { get; set; } = new List<ExpenceCategory>();
+        [JsonIgnore]
+        public virtual ICollection<Expence> Expences { get; set; } = new List<Expence>();
+        [JsonIgnore]
+        public virtual ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
+        [JsonIgnore]
+        public virtual ICollection<ExchangeRateSubscription> ExchangeRates { get; set; } = new List<ExchangeRateSubscription>();
     }
 }
