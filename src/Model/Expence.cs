@@ -16,12 +16,12 @@ namespace Model
         public int Id { get; set; }
         [Required]
         public int UserId { get; set; }
-        [ForeignKey("Id"), JsonIgnore]
-        public User User { get; set; }
+        [JsonIgnore]
+        public virtual User User { get; set; }
         [Required]
         public int CategoryId { get; set; }
-        [ForeignKey("Id"), JsonIgnore]
-        public ExpenceCategory Category { get; set; }
+        [JsonIgnore]
+        public virtual ExpenceCategory Category { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]

@@ -13,8 +13,8 @@ namespace Model
     {
         [Key]
         public int UserId { get; set; }
-        [ForeignKey("Id"), JsonIgnore]
-        public User User { get; set; }
+        [JsonIgnore]
+        public virtual User User { get; set; }
         [Key]
         public string Currency1 { get; set; }
         [Key]
