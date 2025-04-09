@@ -23,15 +23,21 @@ namespace DataAccess.Repository
             ExpenceCategory? res = null;
             try
             {
-                res = _ctx.ExpenceCategories.Find(category.Id);
+                res = _ctx.ExpenceCategories.FirstOrDefault(c => c.Title == category.Title);
                 if (res is null)
                 {
                     res = category;
                     _ctx.ExpenceCategories.Add(res);
                 }
-                if (res.Users.FirstOrDefault(u => u.Id == user.Id) is null)
+                var exUser = _ctx.Users.Find(user.Id);
+                if (exUser is null)
                 {
-                    res.Users.Add(user);
+                    exUser = user;
+                    _ctx.Users.Add(exUser);
+                }
+                if (res.Users.FirstOrDefault(u => u.Id == exUser.Id) is null)
+                {
+                    res.Users.Add(exUser);
                 }
                 _ctx.SaveChanges();
             }
