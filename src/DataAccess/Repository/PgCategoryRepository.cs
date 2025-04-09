@@ -130,7 +130,7 @@ namespace DataAccess.Repository
             var dt = DateTime.UtcNow;
             if (!current)
             {
-                dt.AddMonths(-1);
+                dt = dt.AddMonths(-1);
             }
             var exp = _ctx.Expences.Where(e => e.CategoryId == catId && e.UserId == userId && e.Date.Month == dt.Month)
                 .AsEnumerable();
