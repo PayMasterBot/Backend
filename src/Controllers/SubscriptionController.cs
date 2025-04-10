@@ -13,10 +13,12 @@ namespace src.Controllers
     public class SubscriptionController : ControllerBase
     {
         private ISubscriptionRepository _rep;
+        private ILogger<SubscriptionController> _log;
 
-        public SubscriptionController(PgPayContext ctx) : base()
+        public SubscriptionController(PgPayContext ctx, ILogger<SubscriptionController> logger) : base()
         {
             _rep = new PgSubscriptionRepository(ctx);
+            _log = logger;
         }
 
         [Route("/api/subscription")]
@@ -25,6 +27,14 @@ namespace src.Controllers
         {
             sub.UserId = userId;
             var res = _rep.AddSubscription(sub);
+            if (res is null)
+            {
+                _log.LogError($"Can't add subscription with title {sub.Title} for user {userId}");
+            }
+            else
+            {
+                _log.LogInformation($"Successfull add subscription with title {sub.Title} for user {userId}");
+            }
             return res != null ? Ok(res) : BadRequest(res);
         }
 
@@ -32,7 +42,9 @@ namespace src.Controllers
         [HttpGet]
         public ActionResult<ICollection<Subscription>> AllSubscriptions([FromQuery] int userId)
         {
-            return Ok(_rep.GetSubscriptions(userId));
+            var res = _rep.GetSubscriptions(userId);
+            _log.LogInformation($"Successfull get all categories for user {userId}. Total {res.Count} categories.");
+            return Ok(res);
         }
 
         [Route("/api/subscription/{id}")]
@@ -41,8 +53,10 @@ namespace src.Controllers
         {
             if (_rep.DeleteSubscription(id))
             {
+                _log.LogInformation($"Successfull delete subscription with Id {id}");
                 return Ok();
             }
+            _log.LogInformation($"Can't delete subscription with Id {id}");
             return BadRequest();
         }
 
@@ -51,6 +65,14 @@ namespace src.Controllers
         public ActionResult<Subscription> GetSubscription([FromRoute] int id)
         {
             var res = _rep.GetSubscription(id);
+            if (res is null)
+            {
+                _log.LogError($"Can't get subscription with id {id}");
+            }
+            else
+            {
+                _log.LogInformation($"Successfull get subscription with id {id}");
+            }
             return res != null ? Ok(res) : BadRequest(res);
         }
     }
