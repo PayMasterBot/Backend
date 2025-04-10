@@ -21,6 +21,17 @@ namespace src.Controllers
             _log = logger;
         }
 
+        /// <summary>
+        /// Добавить новую подписку для пользователя
+        /// </summary>
+        /// <remarks>
+        /// Если пользователь не существует, возвращается ошибка.
+        /// </remarks>
+        /// <param name="userId">ID пользователя</param>
+        /// <param name="sub">Подписка пользователя (должны быть заполнены поле Title, Price)</param>
+        /// <returns>Добавленная подписка</returns>
+        /// <response code="200">Подписка для пользователя добавлена</response>
+        /// <response code="400">Ошибка добавления</response>
         [Route("/api/subscription")]
         [HttpPost]
         public ActionResult<Subscription> AddSubscription([FromQuery] int userId, [FromBody] Subscription sub)
@@ -38,6 +49,15 @@ namespace src.Controllers
             return res != null ? Ok(res) : BadRequest(res);
         }
 
+        /// <summary>
+        /// Получить все подписки пользователя
+        /// </summary>
+        /// <remarks>
+        /// Если пользователь не существует, возвращается пустой список.
+        /// </remarks>
+        /// <param name="userId">ID пользователя</param>
+        /// <returns>Список всех подписок</returns>
+        /// <response code="200">Список всех подписок пользователя</response>
         [Route("/api/subscription")]
         [HttpGet]
         public ActionResult<ICollection<Subscription>> AllSubscriptions([FromQuery] int userId)
@@ -47,6 +67,16 @@ namespace src.Controllers
             return Ok(res);
         }
 
+        /// <summary>
+        /// Удалить подписку для пользователя
+        /// </summary>
+        /// <remarks>
+        /// Если подписка не существует, возвращается ошибка.
+        /// </remarks>
+        /// <param name="id">ID подписки</param>
+        /// <returns>Успех или неудача удаления подписки</returns>
+        /// <response code="200">Подписка успешно удалена</response>
+        /// <response code="400">Ошибка удаления</response>
         [Route("/api/subscription/{id}")]
         [HttpDelete]
         public ActionResult DeleteSubscription([FromRoute] int id)
@@ -60,6 +90,16 @@ namespace src.Controllers
             return BadRequest();
         }
 
+        /// <summary>
+        /// Получить подписку для пользователя
+        /// </summary>
+        /// <remarks>
+        /// Если подписка не существует, возвращается ошибка.
+        /// </remarks>
+        /// <param name="id">ID подписки</param>
+        /// <returns>Подписка</returns>
+        /// <response code="200">Подписка для пользователя</response>
+        /// <response code="400">Ошибка получения подписки</response>
         [Route("/api/subscription/{id}")]
         [HttpGet]
         public ActionResult<Subscription> GetSubscription([FromRoute] int id)
