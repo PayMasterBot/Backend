@@ -13,10 +13,12 @@ namespace src.Controllers
     public class CurrencyController : ControllerBase
     {
         private ICurrencyRepository _rep;
+        private ILogger<CurrencyController> _log;
 
-        public CurrencyController(PgPayContext ctx) : base()
+        public CurrencyController(PgPayContext ctx, ILogger<CurrencyController> logger) : base()
         {
             _rep = new PgCurrencyRepository(ctx);
+            _log = logger;
         }
 
         [Route("/api/currency-pair/rate")]
@@ -25,10 +27,13 @@ namespace src.Controllers
         {
             try
             {
-                return Ok(_rep.GetExchangeRate(Cur1, Cur2));
+                var res = _rep.GetExchangeRate(Cur1, Cur2);
+                _log.LogError($"Exchange rate for currencies {Cur1} and {Cur2}: {res}");
+                return Ok(res);
             }
             catch
             {
+                _log.LogError($"Can't get exchange rate for currencies {Cur1} and {Cur2}");
                 return BadRequest();
             }
         }
@@ -37,6 +42,7 @@ namespace src.Controllers
         [HttpGet]
         public ActionResult<ICollection<ExchangeRateSubscription>> AllCurrencyPairs([FromQuery] int userId)
         {
+            _log.LogInformation($"Successfull get list of subscribed pairs for user {userId}");
             return Ok(_rep.GetCurrencyPairs(userId));
         }
 
@@ -46,7 +52,16 @@ namespace src.Controllers
         {
             ExchangeRateSubscription sub = pair;
             sub.UserId = userId;
-            return _rep.DeleteCurrencyPairSubscription(sub) ? Ok() : BadRequest();
+            if (_rep.DeleteCurrencyPairSubscription(sub))
+            {
+                _log.LogInformation($"Successfull delete subscription on pair {pair.Cur1}-{pair.Cur2} for user {userId}");
+                return Ok();
+            }
+            else
+            {
+                _log.LogInformation($"Can't delete subscription on pair {pair.Cur1}-{pair.Cur2} for user {userId}");
+                return BadRequest();
+            }
         }
 
         [Route("/api/currency-pair")]
@@ -56,6 +71,14 @@ namespace src.Controllers
             ExchangeRateSubscription sub = pair;
             sub.UserId = userId;
             var res = _rep.AddCurrencyPairSubscription(sub);
+            if (res is null)
+            {
+                _log.LogError($"Can't subscribe on pair {pair.Cur1}-{pair.Cur2} for user {userId}");
+            }
+            else
+            {
+                _log.LogInformation($"Successfull subscribe on pair {pair.Cur1}-{pair.Cur2} for user {userId}");
+            }
             return res != null ? Ok(res) : BadRequest(res);
         }
 
@@ -64,6 +87,14 @@ namespace src.Controllers
         public ActionResult<ExchangeRateSubscription> GetReport([FromBody] CurrencyPairDto pair)
         {
             var res = _rep.GetReport(pair);
+            if (res is null)
+            {
+                _log.LogError($"Can't make report for pair {pair.Cur1}-{pair.Cur2}");
+            }
+            else
+            {
+                _log.LogInformation($"Successfull make report for pair {pair.Cur1}-{pair.Cur2}");
+            }
             return res != null ? Ok(res) : BadRequest(res);
         }
     }
