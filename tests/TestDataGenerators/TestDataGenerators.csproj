@@ -19,10 +19,14 @@
   <ItemGroup>
     <None Remove="DataBuilders\" />
     <None Remove="ObjectMothers\" />
+    <None Remove="DataBuilders\DTO_Builders\" />
+    <None Remove="ObjectMothers\DTO_ObjectMothers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataBuilders\" />
     <Folder Include="ObjectMothers\" />
+    <Folder Include="DataBuilders\DTO_Builders\" />
+    <Folder Include="ObjectMothers\DTO_ObjectMothers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Model\Model.csproj" />
