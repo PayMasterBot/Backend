@@ -131,14 +131,16 @@ namespace src.Controllers
         /// <remarks>
         /// Если одна из валют не существует возвращается ошибка.
         /// 
-        /// Отчет имеет вид: ???
+        /// Отчет имеет вид: [[...], [...]]
+        /// Каждая свеча содержит Open time (timestamp), Open, High, Low, Close, Volume, Close time (timestamp),
+        /// Quote asset volume, Number of trades, Taker buy base asset volume, Taker buy quote asset volume, Ignore (0).
         /// </remarks>
         /// <param name="pair">Валютная пара (порядок валют важен)</param>
         /// <returns>JSON-отчет</returns>
         /// <response code="200">Отчет</response>
         /// <response code="400">Ошибка создания отчета</response>
         [Route("/api/currency-pair/report")]
-        [HttpGet]
+        [HttpPost]
         public ActionResult<ExchangeRateSubscription> GetReport([FromBody] CurrencyPairDto pair)
         {
             var res = _rep.GetReport(pair);
