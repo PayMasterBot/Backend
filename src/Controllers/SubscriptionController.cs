@@ -34,7 +34,7 @@ namespace src.Controllers
         /// <response code="400">Ошибка добавления</response>
         [Route("/api/subscription")]
         [HttpPost]
-        public ActionResult<Subscription> AddSubscription([FromQuery] int userId, [FromBody] Subscription sub)
+        public ActionResult<Subscription> AddSubscription([FromQuery] int userId, [FromBody] SubscriptionDto sub)
         {
             sub.UserId = userId;
             var res = _rep.AddSubscription(sub);
