@@ -38,6 +38,17 @@ namespace TestDataGenerators.ObjectMothers
                 Currency2 = currency2
             };
         }
+
+        public static ExchangeRateSubscription CreateExchangeRateSubscriptionWithCurrenciesUser(User user, string currency1, string currency2)
+        {
+            return new ExchangeRateSubscription
+            {
+                UserId = user.Id,
+                User = user,
+                Currency1 = currency1,
+                Currency2 = currency2
+            };
+        }
     }
 }
 
