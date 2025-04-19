@@ -1,0 +1,25 @@
+name: CI
+on:
+  push:
+    branches: [ "main", "dev" ]
+  pull_request:
+    branches: [ "main", "dev" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: build
+        run: |
+          cd src
+          dotnet restore
+          dotnet build
+      - name: test
+        run:
+          echo Tmp test
+      - name: deploy
+        run: |
+          cd deploy
+          docker-run.bat
