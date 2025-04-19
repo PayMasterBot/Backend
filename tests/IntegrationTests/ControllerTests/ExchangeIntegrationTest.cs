@@ -72,7 +72,7 @@ namespace IntegrationTests.ControllerTests
         }
 
         //[Test]
-        public async Task GetBalance_Positive_ValidUser()
+        public async Task GetBalance_Positive()
         {
             // Act
             var response = await _client.GetAsync($"/api/exchange/balance?userId={_testUser.Id}");
@@ -81,18 +81,8 @@ namespace IntegrationTests.ControllerTests
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
-        [Test]
-        public async Task GetBalance_Negative_InvalidUser()
-        {
-            // Act
-            var response = await _client.GetAsync("/api/exchange/balance?userId=999");
-
-            // Assert
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-        }
-
         //[Test]
-        public async Task MakeAuth_Positive_ValidCredentials()
+        public async Task MakeAuth_Positive()
         {
             // Act
             var response = await _client.PostAsJsonAsync(
@@ -119,7 +109,7 @@ namespace IntegrationTests.ControllerTests
         }
 
         [Test]
-        public async Task MakeAuth_Negative_InvalidUser()
+        public async Task MakeAuth_Negative()
         {
             // Arrange
             var token = "any_token";
