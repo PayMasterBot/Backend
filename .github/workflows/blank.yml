@@ -22,4 +22,4 @@ jobs:
       - name: deploy
         run: |
           cd deploy
-          docker-run.bat
+          .\docker-run.bat
