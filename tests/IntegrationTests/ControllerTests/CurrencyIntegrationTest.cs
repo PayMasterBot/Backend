@@ -55,10 +55,6 @@ namespace IntegrationTests.ControllerTests
                 UserObjectMother.CreateUserWithToken("userToken3"),
             };
 
-            //_rateToDelete = ExchangeRateSubscriptionObjectMother
-            //    .CreateExchangeRateSubscriptionWithCurrencies("RUB", "GBP");
-
-
             var exchRates = new List<ExchangeRateSubscription>
             {
                 ExchangeRateSubscriptionObjectMother
@@ -162,7 +158,8 @@ namespace IntegrationTests.ControllerTests
         public async Task AddCurrencyPair_Negative_DuplicatePair()
         {
             // Arrange
-            var duplicatePair = new { Cur1 = "USD", Cur2 = "EUR" };
+            var duplicatePair = ExchangeRateSubscriptionObjectMother
+                .CreateExchangeRateSubscriptionWithCurrencies("USD", "EUR");
 
             // Act
             var response = await _client.PostAsJsonAsync(
@@ -200,7 +197,8 @@ namespace IntegrationTests.ControllerTests
         public async Task DeleteCurrencyPair_Negative()
         {
             // Arrange
-            var invalidPair = new { Cur1 = "XXX", Cur2 = "YYY" };
+            var invalidPair = ExchangeRateSubscriptionObjectMother
+                .CreateExchangeRateSubscriptionWithCurrencies("XXX", "YYY");
 
             // Act
             var response = await _client.DeleteAsJsonAsync(
@@ -215,7 +213,8 @@ namespace IntegrationTests.ControllerTests
         public async Task GetReport_Positive()
         {
             // Arrange
-            var validPair = new { Cur1 = "USD", Cur2 = "EUR" };
+            var validPair = ExchangeRateSubscriptionObjectMother
+                .CreateExchangeRateSubscriptionWithCurrencies("USD", "EUR");
 
             // Act
             var response = await _client.GetAsJsonAsync(
@@ -232,10 +231,11 @@ namespace IntegrationTests.ControllerTests
         public async Task GetReport_Negative()
         {
             // Arrange
-            var invalidPair = new { Cur1 = "XXX", Cur2 = "YYY" };
+            var invalidPair = ExchangeRateSubscriptionObjectMother
+                .CreateExchangeRateSubscriptionWithCurrencies("XXX", "YYY");
 
             // Act
-            var response = await _client.GetAsJsonAsync(
+            var response = await _client.PostAsJsonAsync(
                 "/api/currency-pair/report",
                 invalidPair);
 
