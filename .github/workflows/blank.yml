@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-test-deploy:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
@@ -18,7 +18,8 @@ jobs:
           dotnet build
       - name: test
         run:
-          echo Tmp test
+          cd tests
+          dotnet test --no-restore
       - name: deploy
         run: |
           cd deploy
