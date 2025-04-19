@@ -17,7 +17,7 @@ jobs:
           dotnet restore
           dotnet build
       - name: test
-        run:
+        run: |
           cd tests
           dotnet test --no-restore
       - name: deploy
