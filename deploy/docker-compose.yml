@@ -1,0 +1,33 @@
+networks:
+    pmb-backend-net:
+
+services:
+  db-server:
+    image: postgres:15.4
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=pg_admin
+      - POSTGRES_DB=pmb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pmb-data:/var/lib/postgresql/data
+    networks:
+      - pmb-backend-net
+  pmb-server:
+    image: pmb-api-server
+    build:
+      context: ../src
+      dockerfile: ../src/Dockerfile
+    environment:
+      PMB_BACKEND_CONNECT: 'Host=db-server; Database=pmb; Username=admin; Password=pg_admin'
+    ports:
+      - "3000:80"
+    depends_on:
+      - db-server
+    networks:
+      - pmb-backend-net
+volumes:
+  pmb-data:
+  
